@@ -24,3 +24,13 @@ stages:
             backendAzureRmStorageAccountName: 'stginfra02'
             backendAzureRmContainerName: 'infracontainer'
             backendAzureRmKey: 'deepak.tfstate'
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'plan'
+            environmentServiceNameAzureRM: 'pipeline_service_connection'
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'apply'
+            environmentServiceNameAzureRM: 'pipeline_service_connection'
