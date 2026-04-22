@@ -1,0 +1,26 @@
+trigger: none
+
+pool:
+  name: devops-agent-pool
+
+stages:
+  - stage: TerraformStage
+    displayName: "Basic Stage"
+
+    jobs:
+      - job: TerraformJob
+        displayName: "Run Basic Commands"
+        steps:
+        - task: TerraformInstaller@1
+          displayName: terraform installing
+          inputs:
+            terraformVersion: 'latest'
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            backendServiceArm: 'pipeline_service_connection'
+            backendAzureRmResourceGroupName: 'infra_pipeline_rg'
+            backendAzureRmStorageAccountName: 'stginfra02'
+            backendAzureRmContainerName: 'infracontainer'
+            backendAzureRmKey: 'deepak.tfstate'
